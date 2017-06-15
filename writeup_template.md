@@ -85,7 +85,7 @@ The following images show the improvements in comparison to the original abover
 
 My final model consisted of the following layers:
 
-Layer | Logic         		|     Description	        					| 
+|Layer | Logic         		|     Description	        					| 
 |:--- :|:---------------------:|:---------------------------------------------:| 
 |1	     | Input         		| 32x32x3 RGB image   							| 
 |	     | Convolution 5x5     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
