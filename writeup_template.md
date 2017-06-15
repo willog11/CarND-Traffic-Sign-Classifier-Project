@@ -85,23 +85,23 @@ The following images show the improvements in comparison to the original abover
 
 My final model consisted of the following layers:
 
-|Layer | Logic         		|     Description	        					| 
+| Layer | Logic         		|     Description	        					| 
 |:--- :|:---------------------:|:---------------------------------------------:| 
-|1	     | Input         		| 32x32x3 RGB image   							| 
+| 1	     | Input         		| 32x32x3 RGB image   							| 
 |	     | Convolution 5x5     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
 |	     | RELU					| RELU activation based on the convulational output	|
 |	     | Max pooling	      	| 2x2 stride,  outputs 14x14x6				|
-|2	     | Convolution 5x5	    | etc1x1 stride, VALID padding, outputs 10x10x16      									|
+| 2	     | Convolution 5x5	    | etc1x1 stride, VALID padding, outputs 10x10x16      									|
 |	     | RELU					| RELU activation based on the convulational output	|
 |	     | Max pooling	      	| 2x2 stride,  outputs 5x5x16				|
 |	     | Flatten	| Flatten the max pooling output: 400					|
-|3	     | Fully Connected				| Input = 400. Output = 120.  									|
+| 3	     | Fully Connected				| Input = 400. Output = 120.  									|
 |	     | RELU					| RELU activation										|
 |	     | Dropout					|	Drop 50% randomly of the RELU output						|
-|4	     | Fully Connected				| Input = 120. Output = 84.  									|
+| 4	     | Fully Connected				| Input = 120. Output = 84.  									|
 |	     | RELU					| RELU activation										|
 |	     | Dropout					|	Drop 50% randomly of the RELU output						|
-|5	     | Fully Connected				| Input = 84. Output = 43.  									|
+| 5	     | Fully Connected				| Input = 84. Output = 43.  									|
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
