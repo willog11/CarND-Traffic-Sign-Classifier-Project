@@ -85,13 +85,13 @@ The following images show the improvements in comparison to the original abover
 
 My final model consisted of the following layers:
 
-| Layer | Logic         		|     Description	        					| 
-|:--- :|:---------------------:|:---------------------------------------------:| 
+| Layer | Logic         		| Description	        					| 
+|:-----:|:---------------------|:--------------------------------------------------| 
 | 1	     | Input         		| 32x32x3 RGB image   							| 
 |	     | Convolution 5x5     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
 |	     | RELU					| RELU activation based on the convulational output	|
 |	     | Max pooling	      	| 2x2 stride,  outputs 14x14x6				|
-| 2	     | Convolution 5x5	    | etc1x1 stride, VALID padding, outputs 10x10x16      									|
+| 2	     | Convolution 5x5	    | 1x1 stride, VALID padding, outputs 10x10x16      									|
 |	     | RELU					| RELU activation based on the convulational output	|
 |	     | Max pooling	      	| 2x2 stride,  outputs 5x5x16				|
 |	     | Flatten	| Flatten the max pooling output: 400					|
