@@ -56,11 +56,11 @@ signs data set:
 
 To first understand what images I was dealing with I took a sample of each class and displayed them as follows:
 
-![alt text][./doc_images/types_of_classes.png]
+![alt text](doc_images/types_of_classes.png)
 
 After this a bar chart was generated for each class and labelled accordingly. Also included in it was the number of images for each according to the training, validation and test set.
 The following chart shows this breakdown:
-![alt text][./doc_images/breakdown_of_classes.png]
+![alt text](doc_images/breakdown_of_classes.png)
 
 ### Design and Test a Model Architecture
 
@@ -78,7 +78,7 @@ def normalize_img(img):
 
 The following images show the improvements in comparison to the original abover
 
-![alt text][./doc_images/normalized_images.png]
+![alt text](doc_images/normalized_images.png)
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
