@@ -83,7 +83,7 @@ The following images show the improvements in comparison to the original abover
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-My final model consisted of the following layers:
+My final model was essentially the LeNet model coupled with some dropout functionality, it consisted of the following layers:
 
 | Layer | Logic         		| Description	        					| 
 |:-----:|:---------------------|:--------------------------------------------------| 
@@ -104,20 +104,46 @@ My final model consisted of the following layers:
 | **5**	     | Fully Connected				| Input = 84. Output = 43.  									|
 
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, the following steps were taken:
+1. LeNet was used to calculate the logits required to determine which class each batch corresponded to
+2. Softmax cross-entropy coupled with labels that had one had applied to measure the probability error of the LeNet results
+3. The loss is calculated based on point 2 above
+4. The Adaptive Moment Estimation (Adam) optimizer is used to update the weights and biases based on the learning rate applied (values described below). It is essentially a form of gradient descent that tensorflow supports and is recommended to use.
+5. Finally the results from step 4 are minimized
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+The code for this approach is as follows:
+
+~~~
+logits = LeNet(x)
+cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=one_hot_y, logits=logits)
+loss_operation = tf.reduce_mean(cross_entropy)
+optimizer = tf.train.AdamOptimizer(learning_rate = rate)
+training_operation = optimizer.minimize(loss_operation)
+~~~
+
+The following hyperparameters below were used for this approach. These were selected after performing an iterative process to ensure the best results were obtained
+
+~~~
+rate = 0.001
+EPOCHS = 40
+BATCH_SIZE = 128
+mu = 0
+sigma = 0.05
+~~~
+
+#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* Training set accuracy of 99.7%
+* validation set accuracy of 95.7%
+* test set accuracy of 94.5%
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
+An iterative approach was chosen because LeNet alone did not provide good results thus it was tweaked and improved upon to support the dataset that was used. 
+The following is a summary of this iterative approach:
+
+* The first architecture was LeNet with no dropout functions. However it was clear that with this approach the model was over-fitting and the resulting accuracy was poor.
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 * Which parameters were tuned? How were they adjusted and why?
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
