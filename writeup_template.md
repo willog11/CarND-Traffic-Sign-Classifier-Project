@@ -43,14 +43,13 @@ You're reading it! and here is a link to my [project code](https://github.com/wi
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the python and umpy library to calculate summary statistics of the traffic
-signs data set:
+I used the python and numpy library to calculate summary statistics of the traffic signs data set:
 
-* The size of training set is 34799
-* The size of the validation set is 4410
-* The size of test set is 12630
-* The shape of a traffic sign image is (32, 32, 3)
-* The number of unique classes/labels in the data set is 43
+* The size of training set is 34799.
+* The size of the validation set is 4410.
+* The size of test set is 12630.
+* The shape of a traffic sign image is (32, 32, 3).
+* The number of unique classes/labels in the data set is 43.
 
 #### 2. Include an exploratory visualization of the dataset.
 
@@ -109,10 +108,10 @@ My final model was essentially the LeNet model coupled with some dropout functio
 
 To train the model, the following steps were taken:
 1. LeNet was used to calculate the logits required to determine which class each image corresponded to.
-2. Softmax cross-entropy coupled with labels that had one hot applied was used to measure the probability error of the LeNet results
-3. The loss is calculated based on point 2 above
+2. Softmax cross-entropy coupled with labels that had one hot applied was used to measure the probability error of the LeNet results.
+3. The loss is calculated based on point 2 above.
 4. The Adaptive Moment Estimation (Adam) optimizer is used to update the weights and biases based on the learning rate applied (values described below). It is essentially a form of gradient descent algorithm that performs well and is also well supported by tensorflow.
-5. Finally the results from step 4 are minimized
+5. Finally the results from step 4 are minimized.
 
 The code for this approach is as follows:
 
@@ -124,7 +123,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate = rate)
 training_operation = optimizer.minimize(loss_operation)
 ~~~
 
-The following hyperparameters below were used for this approach. These were selected after performing an iterative process to ensure the best results were obtained
+The following hyperparameters below were used for this approach. These were selected after performing an iterative process to ensure the best results were obtained:
 
 ~~~
 rate = 0.001
@@ -142,12 +141,12 @@ My final model results were:
 * Test set accuracy of 94.5%
 
 An iterative approach was chosen because LeNet alone did not provide good results thus it was tweaked and improved upon to support the dataset that was used. 
-The following is a summary of this iterative approach:
 
+The following is a summary of this iterative approach:
 * The first architecture was LeNet with no dropout functions. However it was clear that with this approach the model was over-fitting and the resulting accuracy was poor.
-* As the architecture clearly was having an over-fitting issue I decided to introduce dropout logic to the final 2 layers. This worked well and it resulted in a 3 - 5% gain in the validation accuracy
-* The parameter values were tuned iteratively. Both the learning rate and sigma hyperparams were tweaked to ensure over-fitting was not an issue. Additionally more epochs were added to gaurantee the CNN would maximise its training process by not finishing too early.
-* The use of convnet layers was important as it enables the process of taking an original RGB image with depth 3 and applying a logic flow which results in N layers. These N layers can be further processed easily with maxpooling, dropout, RELU, etc to result in an accurate CNN 
+* As the architecture clearly was having an over-fitting issue I decided to introduce dropout logic to the final 2 layers. This worked well and it resulted in a 3 - 5% gain in the validation accuracy.
+* The parameter values were tuned iteratively. Both the learning rate and sigma hyperparams were tweaked to ensure over-fitting was not an issue. Additionally more epochs were added to guarantee the CNN would maximise its training process by not finishing too early.
+* The use of convnet layers was important as it enables the process of taking an original RGB image with depth 3 and applying a logic flow which results in N layers. These N layers can be further processed easily with maxpooling, dropout, RELU, etc to result in an accurate CNN.
 
 LeNet was chosen for the following reasons:
 * Its a well known architecture which can easily be built upon to improve results, such as the use of dropout. 
