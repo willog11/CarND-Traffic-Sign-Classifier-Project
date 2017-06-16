@@ -137,48 +137,68 @@ sigma = 0.05
 
 My final model results were:
 * Training set accuracy of 99.7%
-* validation set accuracy of 95.7%
-* test set accuracy of 94.5%
+* Validation set accuracy of 95.7%
+* Test set accuracy of 94.5%
 
 An iterative approach was chosen because LeNet alone did not provide good results thus it was tweaked and improved upon to support the dataset that was used. 
 The following is a summary of this iterative approach:
 
 * The first architecture was LeNet with no dropout functions. However it was clear that with this approach the model was over-fitting and the resulting accuracy was poor.
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+* As the architecture clearly was having an over-fitting issue I decided to introduce dropout logic to the final 2 layers. This worked well and it resulted in a 3-5% gain in the validation accuracy
+* The parameter values were tuned iteratively. Both the learning rate and sigma hyperparams were tweaked to ensure over-fitting was not an issue. Additionally more epochs were added to gaurantee the CNN would maximise its training process and it would not end too early.
+* The use of convnet layers was important as it enables the process of taking an original RGB image with depth 3 and applying a logic flow which results in N layers. These N layers can be further processed easily with maxpooling, dropout, RELU etc to result in an accurate CNN 
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+LeNet was chosen for the following reasons:
+* Its a well known architecture which can easily be built upon to improve results, such as the use of dropout. 
+* It is also a relatively simple network to implement and adapt for different use cases. 
+* Its vital that the training and validation accuracy be analysed before validation on the test set of images. If the validation accuracy is not at a high level then the resulting CNN may not perform well on any other dataset. Thus the CNN must have a high training and validation accuracy before testing on the final test set. This final test set can also only be tested once else it risks leading to a biased result if the CNN is improved upon by using the images in the test set.
  
 
-###Test a Model on New Images
+### Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+I selected more than the suggested number of images to further test my CNN with. This is because I wanted to get a wider variety of images to give a less biased result.
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+The following 10 (32x32x3) images with labels applied were downloaded. I manually added the labels in the code (see below). Note in each case the same preprocessing was applied as before/
 
-The first image might be difficult to classify because ...
+![alt text](doc_images/additional_images.png)
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+~~~
+images_test = []
+images_label = [3,1,2,13,12,16,4,5,38,3]
+i=0
+for file in sorted(os.listdir("extra_images")):
+    if file.endswith(".jpg"):
+        img = imread("extra_images/" + file)
+        images_test.append(normalize_img(img))
+        plt.figure(figsize=(1,1))
+        plt.title("Class: "+str(label_desc[images_label[i]]))
+        plt.imshow(img)
+        i+=1
+plt.show()
+~~~
+
+
+#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Speed limit (60km/h)      		| No passing								| 
+| Speed limit (30km/h)    			| Speed limit (30km/h)										|
+| Speed limit (50km/h)					| Speed limit (50km/h)										|
+| Yield	      		| Yield				 				|
+| Priority road 		| Double curve      							|
+| Vehicles over 3.5 metric tons prohibited 		| Priority road       							|
+| Speed limit (70km/h) 		| General caution     							|
+| Speed limit (80km/h 		| Speed limit (80km/h     							|
+| Keep right 		| Keep right     							|
+| Speed limit (60km/h) 		| Speed limit (60km/h)      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 6 of the 10 traffic signs, which gives an accuracy of 60%. The reason for the average performance could be due to the image set used during training. Some of these images may have been very dark\blurry\obscured so the resulting prediction for that class would be affected accordingly
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
