@@ -219,9 +219,38 @@ with tf.Session() as sess:
 ~~~
 
 Additionally, also included is the predicted result for each image:
-![alt text](doc_images/extra_images_prediction_1.png) ![alt text](doc_images/extra_images_prediction_2.png)
+![alt text](doc_images/extra_images_prediction_1.png)  ![alt text](doc_images/extra_images_prediction_2.png)
+
+The following analysis is clear from these images:
+
+* Signs which are similar to 30kph are difficult to distinguish from 30kph such as 80 and 50 kph as the both contain curly like shapes.
+* 30kph sign results in a probability of 100% being the 30kph sign. Additionally its clear from the previous bar charts that this class contains the 2nd most amount of training data
+* The keep right image is very well predicted as the image is very clean, in that only the sign is visible. It also has >1750 training images associated with it. Thus improving the prediction capabilities.
+* The vehicle over 3 ton prohibited sign has very poor prediction but likewise it has very few training images in relation to the rest of the images downloaded.
+* The above results reflect somewhat on the lack of training scenes from some of these classes and the resulting poor prediction performance for them.
+
+
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
+For this optional task the following code was used to pass in the additional image dataset and to plot the resulting covnet layers
+
+~~~
+with tf.Session() as sess:
+    saver.restore(sess, tf.train.latest_checkpoint('.'))
+    conv1 = sess.graph.get_tensor_by_name('conv1:0')
+    outputFeatureMap(images_test, conv1, activation_min=-1, activation_max=-1, plt_num=0)
+    conv2 = sess.graph.get_tensor_by_name('conv2:0')
+    outputFeatureMap(images_test, conv2, activation_min=-1, activation_max=-1, plt_num=1)
+~~~
+
+This resulted in the following feature map images:
+
+![alt text](doc_images/feature_maps.png)
+
+The first set of feature maps are clearer than the second set: 
+* In each case for this feature map the covnet is clearly selecting features with changes in colour and gradient.
+* Each feature map is also significantly different than the previous maps.
+* Also in some cases the colours are swapped. Take for example the black numbers in the sign, in one of the feature maps these remain as black but in others they are white.
 
